@@ -4,8 +4,8 @@ from django.test import TestCase
 
 import requests
 
-url = "http://127.0.0.1/sentiment/"
-#url = "http://localhost/sentiment/"
+url = "http://127.0.0.1:8000/sentiment/"
+#url = "http://localhost:8000/sentiment/"
 
 post_data = {"text": "I don't like this movie."}
 
