@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn sentiment.wsgi:application --bind 127.0.0.1:8000"
+    container_name: sentiment
+    env_file:
+      - ./config/web/web-variables.env
+    volumes:
+      - ./code:/src
+      - ./config/nginx/certs/:/etc/certs
+    expose:
+      - "80"
+      - "8000"
+  nginx:
+    image: nginx:latest
+    container_name: ng
+    ports:
+      - "80:80"
+      - "8000:8000"
+    volumes:
+      - ./config/nginx/:/etc/nginx/conf.d
+    depends_on:
+      - web
